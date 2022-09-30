@@ -1,0 +1,45 @@
+buildscript {
+    ext {
+        springFrameworkVersion = '4.3.30.RELEASE'
+        groovyVersion = '2.5.16'
+    }
+}
+
+plugins {
+    id 'groovy'
+    id 'war'
+}
+
+repositories {
+    //mavenLocal()
+    // Funnel all mavening through a central internal repo, for caching and injecting of old jars not otherwise available via maven
+    maven {
+        name "My Internal Maven Repo"
+        url = 'https://repository.timtest.orf/repository/maven-public'
+    }
+
+    maven {
+        name "My Maven Repo"
+        url = 'https://repository.timtest.orf/repository/maven-releases'
+    }
+
+    maven {
+        name "My Snapshot Maven Repo"
+        url = 'https://repository.timtest.orf/repository/maven-snapshots'
+    }
+}
+
+dependencies {
+    implementation "org.codehaus.groovy:groovy:${groovyVersion}"
+    implementation "org.codehaus.groovy:groovy-json:${groovyVersion}"
+    implementation "org.springframework:spring-web:${springFrameworkVersion}"
+    implementation "org.springframework:spring-webmvc:${springFrameworkVersion}"
+
+    testImplementation "org.codehaus.groovy:groovy-test:${groovyVersion}"
+    testImplementation "org.springframework:spring-test:${springFrameworkVersion}"
+}
+
+group = 'orf.timtest'
+version = '1.0-SNAPSHOT'
+description = 'timtest Maven Webapp'
+sourceCompatibility = '1.8'
