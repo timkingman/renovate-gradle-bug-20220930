@@ -116,3 +116,7 @@ My internal repository URL appears nowhere in the debug logs, and Renovate appea
 ## Expected
 
 I expect Renovate to *only* use my internal repository to resolve artifacts, because that's what Gradle does. I'm not entirely sure that Renovate ever actually did this, but this "Renovate failed to look up" error seems fairly recent. (Though it's possible I haven't noticed in months.)
+
+## Guesses
+
+https://github.com/renovatebot/renovate/pull/14783/files suggests that maybe the issue is giving my repository a `name` line above its `url`. I'm sure I got this from some gradle docs, possibly https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:handling_credentials .
