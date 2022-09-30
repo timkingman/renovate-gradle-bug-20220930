@@ -40,7 +40,7 @@ Here we see that Gradle is using only this repository URL to locate dependencies
 
 ## Stop, Renovate, and Listen
 
-Running Renovate against this project results in an onboarding PR and a list of the dependencies that will be updated after onboarding.
+Running Renovate against this project results in an [onboarding PR](https://github.com/timkingman/renovate-gradle-bug-20220930/pull/1) and a list of the dependencies that will be updated after onboarding.
 
 From the Renovate logs:
 ```
