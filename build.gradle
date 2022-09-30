@@ -11,21 +11,10 @@ plugins {
 }
 
 repositories {
-    //mavenLocal()
     // Funnel all mavening through a central internal repo, for caching and injecting of old jars not otherwise available via maven
     maven {
         name "My Internal Maven Repo"
         url = 'https://repository.timtest.orf/repository/maven-public'
-    }
-
-    maven {
-        name "My Maven Repo"
-        url = 'https://repository.timtest.orf/repository/maven-releases'
-    }
-
-    maven {
-        name "My Snapshot Maven Repo"
-        url = 'https://repository.timtest.orf/repository/maven-snapshots'
     }
 }
 
