@@ -120,3 +120,5 @@ I expect Renovate to *only* use my internal repository to resolve artifacts, bec
 ## Guesses
 
 https://github.com/renovatebot/renovate/pull/14783/files suggests that maybe the issue is giving my repository a `name` line above its `url`. I'm sure I got this from some gradle docs, possibly https://docs.gradle.org/current/userguide/declaring_repositories.html#sec:handling_credentials .
+
+https://github.com/timkingman/renovate-gradle-bug-20220930-workaround flips the url and name lines, which causes Renovate to detect my internal maven repository and use it instead of repo.maven.apache.org.
