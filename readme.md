@@ -1,5 +1,24 @@
 # Renovate bug reproduction
 
+## TL;DR
+
+Renovate seems to recognize and use
+```
+    maven {
+        url = '...'
+        name ".."
+    }
+```
+but not
+```
+    maven {
+        name ".."
+        url = '...'
+    }
+```
+In the second case, Renovate uses repo.maven.apache.org (sending the names of internal artifacts to a public repository, potentially a security leak?)
+
+
 ## What
 
 In my prod repository, I've started seeing "Renovate failed to look up the following dependencies", followed by a list of dependencies that are not in public maven repositories. Some of these are very old jars, some are published privately from other corporate projects.
