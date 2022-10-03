@@ -2,28 +2,23 @@
 
 ## TL;DR
 
-Renovate seems to recognize and use
-```
-    maven {
-        url = '...'
-        name ".."
-    }
-```
-but not
+Renovate doesn't recognize a custom repository URL inside a `maven {}` block when preceeded by `name "..."`
 ```
     maven {
         name ".."
         url = '...'
     }
 ```
-In the second case, Renovate uses repo.maven.apache.org (sending the names of internal artifacts to a public repository, potentially a security leak?)
+and instead of using the custom repository, Renovate looks for updates from repo.maven.apache.org. This could inadvertently leak internal package names to a public repository.
+
+If the above example is changed to `name = "..."`, or if the above `name` and `url` lines are swapped, Renovate does recognize the custom repository.
 
 
 ## What
 
 In my prod repository, I've started seeing "Renovate failed to look up the following dependencies", followed by a list of dependencies that are not in public maven repositories. Some of these are very old jars, some are published privately from other corporate projects.
 
-In my `build.gradle`, I specify our private maven repository, which is a Nexus Repository Manager that proxies Maven Central and also includes both our ancient jars and other corporate-published jars.
+In my `build.gradle`, I specify a private maven repository, which is a Nexus Repository Manager that proxies Maven Central and also includes the dependencies that aren't in Maven Central.
 
 ```
 repositories {
@@ -35,9 +30,9 @@ repositories {
 }
 ```
 
-## This is fake and Gradle knows it
+## Gradle uses only the custom repository
 
-Running `gradle build` in this directory attempts to use that fake repository *instead of Maven Central*:
+Running `gradle build` in this directory attempts to use that repository *instead of Maven Central*, erroring because my example domain does not exist:
 ```
 > Task :war FAILED
 
@@ -57,7 +52,7 @@ Execution failed for task ':war'.
 
 Here we see that Gradle is using only this repository URL to locate dependencies.
 
-## Stop, Renovate, and Listen
+## Renovate doesn't detect the custom repository
 
 Running Renovate against this project results in an [onboarding PR](https://github.com/timkingman/renovate-gradle-bug-20220930/pull/1) and a list of the dependencies that will be updated after onboarding.
 
